@@ -39,7 +39,8 @@ def fetch_networks(url):
 
 def convert_to_ipnetwork(blocklist_line):
     blocklist_line = blocklist_line.strip()
-    if blocklist_line.startswith("#") or not blocklist_line:  # commentary or empty one
+    # commentary or empty one
+    if blocklist_line.startswith("#") or not blocklist_line:
         return []
 
     chunks = blocklist_line.split(":")
@@ -47,10 +48,10 @@ def convert_to_ipnetwork(blocklist_line):
         raise ParseError(blocklist_line, "Incorrect format")
 
     try:
-        ip_start, ip_finish = tuple(rng.strip() for rng in chunks[1].split("-"))
+        start, finish = tuple(rng.strip() for rng in chunks[1].split("-"))
     except ValueError as err:
         raise ParseError(blocklist_line, err)
     try:
-        return netaddr.IPRange(ip_start, ip_finish).cidrs()
+        return netaddr.IPRange(start, finish).cidrs()
     except Exception as exc:
         raise ParseError(blocklist_line, exc)
