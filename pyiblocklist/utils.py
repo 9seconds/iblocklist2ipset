@@ -3,6 +3,8 @@
 
 import functools
 import time
+import os.path
+import re
 import random
 
 
@@ -21,3 +23,10 @@ def try_if_empty(count):
 
         return inner_decorator
     return outer_decorator
+
+
+def printable_path(path):
+    abspath = os.path.abspath(path)
+    if re.search(r"\s", abspath) is not None:
+        abspath = '"' + abspath.replace('"', r'\"') + '"'
+    return abspath
