@@ -30,5 +30,5 @@ def convert_to_ipnetwork(blocklist_line):
     if len(chunks) != 2:
         return []
 
-    iprange = tuple(rng.strip() for rng in chunks[1].split("-"))
-    return netaddr.IPRange(*iprange).cidrs()
+    ip_start, ip_finish = tuple(rng.strip() for rng in chunks[1].split("-"))
+    return netaddr.IPRange(ip_start, ip_finish).cidrs()

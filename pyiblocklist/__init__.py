@@ -3,15 +3,15 @@
 Small utility to convert p2p format of IP Blocklists to IPSet format.
 
 Usage:
-    {program} generate [--ipset=IPSET_NAME | -i IPSET_NAME] <blocklists_filename>
-    {program} example_ipset_job [--ipset=IPSET_NAME | -i IPSET_NAME] <iptables_name> <ipset_filename>
-    {program} -h | --help
-    {program} --version
+  {program} generate [options] BLOCKLIST_PATH
+  {program} example_ipset_job [options] IPTABLES_NAME IPSET_PATH
+  {program} -h | --help
+  {program} --version
 
 Options:
-    -h --help                           Shows this screen.
-    --version                           Shows version and exits.
-    -i IPSET_NAME --ipset=IPSET_NAME    The name of IPset table to mention [default: blocklist]
+  -h --help                         Shows this screen.
+  --version                         Shows version and exits.
+  -i IPSET_NAME --ipset=IPSET_NAME  The name of IPSet set [default: blocklist]
 
 To get IP blocklists please visit https://www.iblocklist.com/
 """
@@ -30,8 +30,8 @@ from .networks import extract_networks
 
 
 def example_ipset_job(args):
-    ipset_filename = os.path.abspath(args["<ipset_filename>"])
-    iptables_name = args["<iptables_name>"]
+    ipset_filename = os.path.abspath(args["IPSET_PATH"])
+    iptables_name = args["IPTABLES_NAME"]
 
     print("#!/bin/sh", end="\n\n")
     print("ipset restore -f {}".format(ipset_filename), end="\n\n")
@@ -49,7 +49,7 @@ def example_ipset_job(args):
 
 
 def generate(args):
-    with open(args["<blocklists_filename>"], "r") as resource:
+    with open(args["BLOCKLIST_PATH"], "r") as resource:
         urls = [line.strip() for line in resource if line.startswith("http")]
 
     networks = extract_networks(urls)
@@ -61,7 +61,8 @@ def generate(args):
 
 
 def main():
-    arguments = docopt.docopt(__doc__.format(program=PROGRAM_NAME), version="")
+    arguments = docopt.docopt(__doc__.format(program=PROGRAM_NAME),
+                              version=".".join(VERSION))
 
     if arguments["generate"]:
         return generate(arguments)
