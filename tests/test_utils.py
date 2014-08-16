@@ -18,6 +18,7 @@ import pytest
 from pyiblocklist.utils import try_if_empty
 
 
+# noinspection PyUnresolvedReferences
 class TestTryIfEmpty(object):
 
     @pytest.mark.parametrize("input_, expect_", (
@@ -35,6 +36,7 @@ class TestTryIfEmpty(object):
 
         assert fail_func() == expect_
 
+    # noinspection PyMethodMayBeStatic
     def test_exception_is_raised(self):
         @try_if_empty(10)
         def fail_func():

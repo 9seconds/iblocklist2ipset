@@ -21,6 +21,7 @@ import pytest
 from pyiblocklist.ipset import ipset_hashsize, generate_ipset
 
 
+# noinspection PyUnresolvedReferences
 class TestHashSize(object):
 
     @pytest.mark.parametrize("input_", (
@@ -83,10 +84,7 @@ class TestGenerateIPSet(object):
             hashsize\s+(?P<hashsize>\d+)\s+
             maxelem\s+(?P<maxelem>\d+)\s*
             $
-            """,
-            header,
-            re.VERBOSE
-        )
+            """, header, re.VERBOSE)
         assert matcher is not None, header
 
         elements = matcher.groupdict()
@@ -97,6 +95,7 @@ class TestGenerateIPSet(object):
 
         assert elements["name"] == self.IPTABLES_NAME, elements
         assert elements["hashsize"] < elements["maxelem"], elements
+        # noinspection PyTypeChecker
         assert elements["hashsize"] & (elements["hashsize"] - 1) == 0, elements
         assert elements["maxelem"] == self.DEFAULT_NETWORK_COUNT, elements
 
