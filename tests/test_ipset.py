@@ -18,7 +18,7 @@ import random
 
 import pytest
 
-from pyiblocklist.ipset import ipset_hashsize, generate_ipset
+from iblocklist2ipset.ipset import ipset_hashsize, generate_ipset
 
 
 # noinspection PyUnresolvedReferences

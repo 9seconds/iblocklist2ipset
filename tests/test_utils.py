@@ -20,7 +20,7 @@ import StringIO
 
 import pytest
 
-from pyiblocklist.utils import try_if_empty, printable_path, \
+from iblocklist2ipset.utils import try_if_empty, printable_path, \
     script_example_header
 
 

@@ -16,7 +16,7 @@ if __package__ is None:
 import httmock
 import pytest
 
-from pyiblocklist.networks import extract_networks, fetch_networks, \
+from iblocklist2ipset.networks import extract_networks, fetch_networks, \
     convert_to_ipnetwork, ParseError
 
 
