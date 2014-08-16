@@ -10,10 +10,14 @@ python:
   - "pypy3"
 
 install:
-  - "pip install --use-mirrors -r requirements.txt"
+  - pip install --use-mirrors -r requirements.txt
+  - pip install coveralls
 
 script:
-  - py.test tests
+  - py.test --cov-report=term-missing --cov iblocklist2ipset tests
+
+after_success:
+  coveralls
 
 notifications:
   email:

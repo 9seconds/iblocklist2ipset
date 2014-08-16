@@ -5,5 +5,6 @@ docopt==0.6.2
 
 # Tests and verification
 pytest==2.6.1
+pytest-cov==1.7.0
 prospector==0.5.6
 httmock==1.2.2
