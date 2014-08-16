@@ -16,7 +16,7 @@ def try_if_empty(count):
                 result = func(*args, **kwargs)
                 if result:
                     return result
-                time.sleep(max(5, random.randint(1, attempt + 1)))
+                time.sleep(min(5, random.randint(1, attempt + 1)))
             return func(*args, **kwargs)
 
         return inner_decorator
