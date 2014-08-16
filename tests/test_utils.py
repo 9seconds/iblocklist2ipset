@@ -16,9 +16,10 @@ if __package__ is None:
     ]
 
 import posixpath
-import StringIO
 
 import pytest
+
+from six import moves
 
 from iblocklist2ipset.utils import try_if_empty, printable_path, \
     script_example_header
@@ -75,7 +76,7 @@ class TestScriptExampleHeader(object):
 
     @staticmethod
     def patch_io(patcher):
-        io = StringIO.StringIO()
+        io = moves.cStringIO()
         patcher.setattr("sys.stdout", io)
         return io
 

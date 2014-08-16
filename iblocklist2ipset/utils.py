@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import print_function
-
 import functools
 import time
 import sys
@@ -10,6 +8,8 @@ import os
 import os.path
 import posixpath
 import re
+
+from six import u, moves, print_
 
 from .settings import TIME_TO_SLEEP
 
@@ -20,11 +20,11 @@ def try_if_empty(count):
     def outer_decorator(func):
         @functools.wraps(func)
         def inner_decorator(*args, **kwargs):
-            for attempt in xrange(count - 1):
+            for attempt in moves.range(count - 1):
                 try:
                     result = func(*args, **kwargs)
                 except Exception as exc:  # pylint: disable=W0703
-                    print(u"[{0}/{1}] Error during parsing: {2}".format(
+                    print_(u("[{0}/{1}] Error during parsing: {2}").format(
                         attempt, count, exc
                     ), file=sys.stderr)
                     time.sleep(TIME_TO_SLEEP)
@@ -39,14 +39,14 @@ def try_if_empty(count):
 def script_example_header(func):
     @functools.wraps(func)
     def decorator(*args, **kwargs):
-        print("#!/bin/bash\nset -e", end="\n\n")
+        print_("#!/bin/bash\nset -e", end="\n\n")
 
         if os.getenv("VIRTUAL_ENV"):
             script_path = posixpath.join(
                 os.getenv("VIRTUAL_ENV"), "bin", "activate"
             )
-            print('source {0}'.format(printable_path(script_path)),
-                  end="\n\n")
+            print_(u('source {0}').format(printable_path(script_path)),
+                   end="\n\n")
 
         return func(*args, **kwargs)
     return decorator

@@ -18,6 +18,8 @@ import random
 
 import pytest
 
+from six import itervalues
+
 from iblocklist2ipset.ipset import ipset_hashsize, generate_ipset
 
 
@@ -88,7 +90,7 @@ class TestGenerateIPSet(object):
         assert matcher is not None, header
 
         elements = matcher.groupdict()
-        for element in elements.itervalues():
+        for element in itervalues(elements):
             assert element is not None, elements
         elements["hashsize"] = int(elements["hashsize"])
         elements["maxelem"] = int(elements["maxelem"])
@@ -111,7 +113,7 @@ class TestGenerateIPSet(object):
             assert matcher is not None, line
 
             elements = matcher.groupdict()
-            for element in elements.itervalues():
+            for element in itervalues(elements):
                 assert element is not None, elements
             assert elements["name"] == self.IPTABLES_NAME, line
             assert elements["network"] in networks, line

@@ -16,6 +16,8 @@ if __package__ is None:
 import httmock
 import pytest
 
+from six import moves
+
 from iblocklist2ipset.networks import extract_networks, fetch_networks, \
     convert_to_ipnetwork, ParseError
 
@@ -103,7 +105,7 @@ class TestFetchNetworks(object):
 class TestExtractNetworks(object):
 
     def test_no_repeats(self):
-        urls = ["http://fake{0}.url".format(idx) for idx in xrange(3)]
+        urls = ["http://fake{0}.url".format(idx) for idx in moves.range(3)]
         with httmock.HTTMock(fake_response(FAKE_CONTENT)):
             networks = extract_networks(urls)
 

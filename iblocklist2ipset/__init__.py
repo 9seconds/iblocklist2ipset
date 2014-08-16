@@ -18,11 +18,11 @@ To get IP blocklists please visit https://www.iblocklist.com/
 """
 
 
-from __future__ import print_function, absolute_import
-
 import sys
 
 import docopt
+
+from six import u, print_
 
 from .ipset import generate_ipset
 from .networks import extract_networks
@@ -30,7 +30,7 @@ from .settings import PROGRAM_NAME, VERSION
 from .utils import printable_path, script_example_header
 
 
-RESTORE_IPSET_JOB_SCRIPT = ur"""
+RESTORE_IPSET_JOB_SCRIPT = r"""
 ipset restore -f {ipset_filename}
 
 iptables -F {iptables_name}
@@ -43,16 +43,18 @@ iptables -A {iptables_name} \
     -m set --match-set {ipset_name} dst \
     -j REJECT --reject-with icmp-host-unreachable
 """.strip()
+RESTORE_IPSET_JOB_SCRIPT = u(RESTORE_IPSET_JOB_SCRIPT)
 
-UPDATE_IPSET_JOB_SCRIPT = ur"""
+UPDATE_IPSET_JOB_SCRIPT = r"""
 {progpath} generate --ipset {ipset_name} {urls} > /tmp/{progname}.ipset
 mv /tmp/{progpath}.ipset {ipset_path}
 """.strip()
+UPDATE_IPSET_JOB_SCRIPT = u(UPDATE_IPSET_JOB_SCRIPT)
 
 
 @script_example_header
 def example_restore_ipset_job(args):
-    print(RESTORE_IPSET_JOB_SCRIPT.format(
+    print_(RESTORE_IPSET_JOB_SCRIPT.format(
         ipset_filename=printable_path(args["IPSET_PATH"]),
         iptables_name=args["IPTABLES_NAME"],
         ipset_name=args["--ipset"]
@@ -61,7 +63,7 @@ def example_restore_ipset_job(args):
 
 @script_example_header
 def example_update_ipset_job(args):
-    print(UPDATE_IPSET_JOB_SCRIPT.format(
+    print_(UPDATE_IPSET_JOB_SCRIPT.format(
         progpath=printable_path(sys.argv[0]),
         progname=PROGRAM_NAME,
         ipset_name=args["--ipset"],
@@ -74,7 +76,8 @@ def generate(args):
     try:
         netwrks = extract_networks(args["BLOCKLIST_URL"])
     except Exception as err:  # pylint: disable=W0703
-        print(u"Cannot extract networks: {0}".format(err), file=sys.stderr)
+        print_(u("Cannot extract networks: {0}").format(err),
+               file=sys.stderr)
         return 1
 
     for line in generate_ipset(args["--ipset"], netwrks):

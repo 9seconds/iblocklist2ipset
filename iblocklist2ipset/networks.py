@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import absolute_import
-
 import itertools
 
 import netaddr
 import requests
+
+from six import u
 
 from .settings import ATTEMPT_COUNT
 from .utils import try_if_empty
@@ -16,7 +16,7 @@ class ParseError(ValueError):
 
     def __init__(self, line, msg):
         super(ParseError, self).__init__(
-            u'Incorrect incoming line "{0}": {1}'.format(
+            u('Incorrect incoming line "{0}": {1}').format(
                 line, msg
             )
         )
