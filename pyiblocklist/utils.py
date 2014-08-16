@@ -38,7 +38,7 @@ def script_example_header(func):
             script_path = posixpath.join(
                 os.getenv("VIRTUAL_ENV"), "bin", "activate"
             )
-            print('source "{}"'.format(script_path), end="\n\n")
+            print('source {}'.format(printable_path(script_path)), end="\n\n")
 
         return func(*args, **kwargs)
     return decorator

@@ -5,6 +5,8 @@ import math
 
 
 def ipset_hashsize(element_count):
+    assert element_count > 0
+
     power = math.floor(math.log(element_count) / math.log(2))
     return int(math.pow(2, power))
 
