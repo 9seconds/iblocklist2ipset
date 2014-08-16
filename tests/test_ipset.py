@@ -53,14 +53,14 @@ class TestGenerateIPSet(object):
 
     @staticmethod
     def random_network():
-        ipaddr = "{}.{}.{}.{}".format(
+        ipaddr = "{0}.{1}.{2}.{3}".format(
             random.randint(1, 254),
             random.randint(1, 254),
             random.randint(1, 254),
             random.randint(1, 254)
         )
         if random.random() > 0.1:
-            ipaddr += "/{}".format(random.randint(1, 32))
+            ipaddr += "/{0}".format(random.randint(1, 32))
 
         return ipaddr
 

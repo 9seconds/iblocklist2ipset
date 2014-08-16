@@ -16,7 +16,7 @@ class ParseError(ValueError):
 
     def __init__(self, line, msg):
         super(ParseError, self).__init__(
-            u'Incorrect incoming line "{}": {}'.format(
+            u'Incorrect incoming line "{0}": {1}'.format(
                 line, msg
             )
         )

@@ -65,7 +65,7 @@ def example_update_ipset_job(args):
         progpath=printable_path(sys.argv[0]),
         progname=PROGRAM_NAME,
         ipset_name=args["--ipset"],
-        urls=" ".join('"{}"'.format(url) for url in args["BLOCKLIST_URL"]),
+        urls=" ".join('"{0}"'.format(url) for url in args["BLOCKLIST_URL"]),
         ipset_path=printable_path(args["IPSET_PATH"])
     ))
 
@@ -74,7 +74,7 @@ def generate(args):
     try:
         netwrks = extract_networks(args["BLOCKLIST_URL"])
     except Exception as err:  # pylint: disable=W0703
-        print(u"Cannot extract networks: {}".format(err), file=sys.stderr)
+        print(u"Cannot extract networks: {0}".format(err), file=sys.stderr)
         return 1
 
     for line in generate_ipset(args["--ipset"], netwrks):

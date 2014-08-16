@@ -105,4 +105,4 @@ class TestScriptExampleHeader(object):
         output = self.run(io)
 
         source_path = posixpath.join(virtualenv_path, "bin", "activate")
-        assert "source {}".format(source_path) in output
+        assert "source {0}".format(source_path) in output

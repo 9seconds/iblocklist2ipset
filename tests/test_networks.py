@@ -103,7 +103,7 @@ class TestFetchNetworks(object):
 class TestExtractNetworks(object):
 
     def test_no_repeats(self):
-        urls = ["http://fake{}.url".format(idx) for idx in xrange(3)]
+        urls = ["http://fake{0}.url".format(idx) for idx in xrange(3)]
         with httmock.HTTMock(fake_response(FAKE_CONTENT)):
             networks = extract_networks(urls)
 
