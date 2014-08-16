@@ -12,6 +12,16 @@ from .settings import ATTEMPT_COUNT
 from .utils import try_if_empty
 
 
+class ParseError(ValueError):
+
+    def __init__(self, line, msg):
+        super(ParseError, self).__init__(
+            u'Incorrect incoming line "{}": {}'.format(
+                line, msg
+            )
+        )
+
+
 @try_if_empty(ATTEMPT_COUNT)
 def extract_networks(urls):
     networks = itertools.chain.from_iterable(
@@ -28,9 +38,19 @@ def fetch_networks(url):
 
 
 def convert_to_ipnetwork(blocklist_line):
-    chunks = blocklist_line.split(":")
-    if len(chunks) != 2:
+    blocklist_line = blocklist_line.strip()
+    if blocklist_line.startswith("#") or not blocklist_line:  # commentary or empty one
         return []
 
-    ip_start, ip_finish = tuple(rng.strip() for rng in chunks[1].split("-"))
-    return netaddr.IPRange(ip_start, ip_finish).cidrs()
+    chunks = blocklist_line.split(":")
+    if len(chunks) != 2:
+        raise ParseError(blocklist_line, "Incorrect format")
+
+    try:
+        ip_start, ip_finish = tuple(rng.strip() for rng in chunks[1].split("-"))
+    except ValueError as err:
+        raise ParseError(blocklist_line, err)
+    try:
+        return netaddr.IPRange(ip_start, ip_finish).cidrs()
+    except Exception as exc:
+        raise ParseError(blocklist_line, exc)

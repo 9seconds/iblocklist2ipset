@@ -3,7 +3,7 @@
 Small utility to convert p2p format of IP Blocklists to IPSet format.
 
 Usage:
-  {program} generate [options] BLOCKLIST_PATH
+  {program} generate [options] BLOCKLIST_URL...
   {program} example_ipset_job [options] IPTABLES_NAME IPSET_PATH
   {program} -h | --help
   {program} --version
@@ -49,11 +49,10 @@ def example_ipset_job(args):
 
 
 def generate(args):
-    with open(args["BLOCKLIST_PATH"], "r") as resource:
-        urls = [line.strip() for line in resource if line.startswith("http")]
-
-    netwrks = extract_networks(urls)
-    if not netwrks:
+    try:
+        netwrks = extract_networks(args["BLOCKLIST_URL"])
+    except Exception as err:  # pylint: disable=W0703
+        print(u"Cannot extract networks: {}".format(err), file=sys.stderr)
         return 1
 
     for line in generate_ipset(args["--ipset"], netwrks):
@@ -62,7 +61,7 @@ def generate(args):
 
 def main():
     arguments = docopt.docopt(__doc__.format(program=PROGRAM_NAME),
-                              version=".".join(VERSION))
+                              version=".".join(str(part) for part in VERSION))
 
     if arguments["generate"]:
         return generate(arguments)
