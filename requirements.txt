@@ -1,0 +1,8 @@
+# Project requirements
+netaddr==0.7.12
+requests==2.3.0
+docopt==0.6.2
+
+# Tests and verification
+pytest==2.6.1
+prospector==0.5.6
