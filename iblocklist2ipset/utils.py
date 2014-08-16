@@ -5,11 +5,13 @@ from __future__ import print_function
 
 import functools
 import time
+import sys
 import os
 import os.path
 import posixpath
 import re
-import random
+
+from .settings import TIME_TO_SLEEP
 
 
 def try_if_empty(count):
@@ -19,10 +21,15 @@ def try_if_empty(count):
         @functools.wraps(func)
         def inner_decorator(*args, **kwargs):
             for attempt in xrange(count - 1):
-                result = func(*args, **kwargs)
-                if result:
+                try:
+                    result = func(*args, **kwargs)
+                except Exception as exc:
+                    print(u"[{}/{}] Error during parsing: {}".format(
+                        attempt, count, exc
+                    ), file=sys.stderr)
+                    time.sleep(TIME_TO_SLEEP)
+                else:
                     return result
-                time.sleep(min(5, random.randint(1, attempt + 1)))
             return func(*args, **kwargs)
 
         return inner_decorator

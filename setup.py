@@ -5,6 +5,8 @@
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
+from iblocklist2ipset.settings import VERSION
+
 
 ##############################################################################
 
@@ -46,7 +48,7 @@ setup(
     name="iblocklist2ipset",
     description="Converter between P2P lists from IBlocklist.com to IPSet",
     long_description="TTT",
-    version="0.0.1",
+    version=".".join(str(part) for part in VERSION),
     author="Sergey Arkhipov",
     license="MIT",
     author_email="serge@aerialsounds.org",

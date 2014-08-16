@@ -44,11 +44,9 @@ def convert_to_ipnetwork(blocklist_line):
         return []
 
     chunks = blocklist_line.split(":")
-    if len(chunks) != 2:
-        raise ParseError(blocklist_line, "Incorrect format")
 
     try:
-        start, finish = tuple(rng.strip() for rng in chunks[1].split("-"))
+        start, finish = tuple(rng.strip() for rng in chunks[-1].split("-"))
     except ValueError as err:
         raise ParseError(blocklist_line, err)
     try:

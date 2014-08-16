@@ -5,3 +5,4 @@ PROGRAM_NAME = "iblocklist2ipset"
 VERSION = 0, 0, 1
 
 ATTEMPT_COUNT = 16
+TIME_TO_SLEEP = 1

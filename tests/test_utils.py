@@ -30,20 +30,25 @@ class TestTryIfEmpty(object):
     @pytest.mark.parametrize("input_, expect_", (
         ([1, 2], 1),
         ([[], []], []),
-        ([[], None], None),
         ([None, 1], 1)
     ))
-    def test_ok(self, input_, expect_):
+    def test_ok(self, input_, expect_, monkeypatch):
+        monkeypatch.setattr("iblocklist2ipset.utils.TIME_TO_SLEEP", 0)
         inpt = list(reversed(input_))
 
         @try_if_empty(2)
         def fail_func():
-            return inpt.pop()
+            result = inpt.pop()
+            if result is None and inpt:
+                raise Exception
+            return result
 
         assert fail_func() == expect_
 
     # noinspection PyMethodMayBeStatic
-    def test_exception_is_raised(self):
+    def test_exception_is_raised(self, monkeypatch):
+        monkeypatch.setattr("iblocklist2ipset.utils.TIME_TO_SLEEP", 0)
+
         @try_if_empty(10)
         def fail_func():
             raise Exception
