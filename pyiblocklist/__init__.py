@@ -27,13 +27,10 @@ import docopt
 from .ipset import generate_ipset
 from .networks import extract_networks
 from .settings import PROGRAM_NAME, VERSION
-from .utils import printable_path
+from .utils import printable_path, script_example_header
 
 
 RESTORE_IPSET_JOB_SCRIPT = ur"""
-#!/bin/bash
-set -e
-
 ipset restore -f {ipset_filename}
 
 iptables -F {iptables_name}
@@ -48,14 +45,12 @@ iptables -A {iptables_name} \
 """.strip()
 
 UPDATE_IPSET_JOB_SCRIPT = ur"""
-#!/bin/bash
-set -e
-
 {progpath} generate --ipset {ipset_name} {urls} > /tmp/{progname}.ipset
 mv /tmp/{progpath}.ipset {ipset_path}
 """.strip()
 
 
+@script_example_header
 def example_restore_ipset_job(args):
     print(RESTORE_IPSET_JOB_SCRIPT.format(
         ipset_filename=printable_path(args["IPSET_PATH"]),
@@ -64,6 +59,7 @@ def example_restore_ipset_job(args):
     ))
 
 
+@script_example_header
 def example_update_ipset_job(args):
     print(UPDATE_IPSET_JOB_SCRIPT.format(
         progpath=printable_path(sys.argv[0]),

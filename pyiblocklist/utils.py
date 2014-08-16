@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
+from __future__ import print_function
+
 import functools
 import time
+import os
 import os.path
+import posixpath
 import re
 import random
 
@@ -23,6 +27,21 @@ def try_if_empty(count):
 
         return inner_decorator
     return outer_decorator
+
+
+def script_example_header(func):
+    @functools.wraps(func)
+    def decorator(*args, **kwargs):
+        print("#!/bin/bash\nset -e", end="\n\n")
+
+        if os.getenv("VIRTUAL_ENV"):
+            script_path = posixpath.join(
+                os.getenv("VIRTUAL_ENV"), "bin", "activate"
+            )
+            print('source "{}"'.format(script_path), end="\n\n")
+
+        return func(*args, **kwargs)
+    return decorator
 
 
 def printable_path(path):
