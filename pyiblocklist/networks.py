@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 
 
+from __future__ import absolute_import
+
+import itertools
+
 import netaddr
 import requests
 
-from .common import ATTEMPT_COUNT
+from .settings import ATTEMPT_COUNT
 from .utils import try_if_empty
 
 
 @try_if_empty(ATTEMPT_COUNT)
 def extract_networks(urls):
-    network_set = set()
-
-    for url in urls:
-        network_set.update(fetch_networks(url))
-
-    return network_set
+    networks = itertools.chain.from_iterable(
+        fetch_networks(url) for url in urls
+    )
+    return frozenset(networks)
 
 
 def fetch_networks(url):

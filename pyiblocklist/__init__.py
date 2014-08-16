@@ -24,7 +24,7 @@ import sys
 
 import docopt
 
-from .common import PROGRAM_NAME, VERSION
+from .settings import PROGRAM_NAME, VERSION
 from .ipset import generate_ipset
 from .networks import extract_networks
 
@@ -52,11 +52,11 @@ def generate(args):
     with open(args["BLOCKLIST_PATH"], "r") as resource:
         urls = [line.strip() for line in resource if line.startswith("http")]
 
-    networks = extract_networks(urls)
-    if not networks:
+    netwrks = extract_networks(urls)
+    if not netwrks:
         return 1
 
-    for line in generate_ipset(args["--ipset"], networks):
+    for line in generate_ipset(args["--ipset"], netwrks):
         print(line)
 
 
