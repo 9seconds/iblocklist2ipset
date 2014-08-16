@@ -14,7 +14,6 @@ install:
 
 script:
   - py.test tests
-  - prospector --strictness veryhigh -F -B -o grouped
 
 notifications:
   email:
