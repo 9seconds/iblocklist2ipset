@@ -23,7 +23,7 @@ def try_if_empty(count):
             for attempt in xrange(count - 1):
                 try:
                     result = func(*args, **kwargs)
-                except Exception as exc:
+                except Exception as exc:  # pylint: disable=W0703
                     print(u"[{}/{}] Error during parsing: {}".format(
                         attempt, count, exc
                     ), file=sys.stderr)

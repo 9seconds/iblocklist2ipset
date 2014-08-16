@@ -3,7 +3,7 @@
 
 
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
+from setuptools.command.test import test
 
 from iblocklist2ipset.settings import VERSION
 
@@ -22,20 +22,20 @@ REQUIREMENTS = (
 
 
 # copypasted from http://pytest.org/latest/goodpractises.html
-class PyTest(TestCommand):
+class PyTest(test):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
 
     def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.pytest_args = None
+        test.initialize_options(self)
+        self.pytest_args = None  # pylint: disable=W0201
 
     def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = []
-        self.test_suite = True
+        test.finalize_options(self)
+        self.test_args = []  # pylint: disable=W0201
+        self.test_suite = True  # pylint: disable=W0201
 
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
+        # import here, cause outside the eggs aren't loaded
         import pytest
         import sys
         errno = pytest.main(self.pytest_args)
@@ -58,7 +58,9 @@ setup(
     install_requires=REQUIREMENTS,
     tests_require=["pytest==2.6.1", "httmock==1.2.2"],
     packages=find_packages(exclude=["tests"]),
-    entry_points=dict(console_scripts=["iblocklist2ipset = iblocklist2ipset:main"]),
+    entry_points={"console_scripts": [
+        "iblocklist2ipset = iblocklist2ipset:main"
+    ]},
     cmdclass={'test': PyTest},
     classifiers=[
         "Development Status :: 4 - Beta",
