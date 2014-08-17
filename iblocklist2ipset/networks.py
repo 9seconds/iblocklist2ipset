@@ -27,7 +27,7 @@ def extract_networks(urls):
     networks = itertools.chain.from_iterable(
         fetch_networks(url) for url in urls
     )
-    return frozenset(str(network) for network in netaddr.cidr_merge(networks))
+    return tuple(str(network) for network in netaddr.cidr_merge(networks))
 
 
 def fetch_networks(url):
