@@ -47,7 +47,7 @@ RESTORE_IPSET_JOB_SCRIPT = u(RESTORE_IPSET_JOB_SCRIPT)
 
 UPDATE_IPSET_JOB_SCRIPT = r"""
 {progpath} generate --ipset {ipset_name} {urls} > /tmp/{progname}.ipset
-mv /tmp/{progpath}.ipset {ipset_path}
+mv /tmp/{progname}.ipset {ipset_path}
 """.strip()
 UPDATE_IPSET_JOB_SCRIPT = u(UPDATE_IPSET_JOB_SCRIPT)
 
@@ -94,7 +94,3 @@ def main():
         return example_restore_ipset_job(arguments)
     elif arguments["example_update_ipset_job"]:
         return example_update_ipset_job(arguments)
-
-
-if __name__ == "__main__":
-    sys.exit(main())

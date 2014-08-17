@@ -19,10 +19,9 @@ import posixpath
 
 import pytest
 
-from six import moves
-
 from iblocklist2ipset.utils import try_if_empty, printable_path, \
     script_example_header
+from tests import CommonTest
 
 
 # noinspection PyUnresolvedReferences
@@ -72,22 +71,17 @@ class TestPrintablePath(object):
         assert printable_path(input_) == expect_
 
 
-class TestScriptExampleHeader(object):
+class TestScriptExampleHeader(CommonTest):
 
-    @staticmethod
-    def patch_io(patcher):
-        io = moves.cStringIO()
-        patcher.setattr("sys.stdout", io)
-        return io
-
-    @staticmethod
-    def run(io):
+    @classmethod
+    def run(cls, io):
         @script_example_header
         def func():
             return 1
         func()
 
-        return [line for line in io.getvalue().split("\n") if line]
+        _, output = cls.run_with_output(io, func)
+        return output
 
     def test_wo_virtualenv(self, monkeypatch):
         io = self.patch_io(monkeypatch)
