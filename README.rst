@@ -166,12 +166,12 @@ for me.
 
 Cheers.
 
-.. |Build Status| .. image:: https://travis-ci.org/9seconds/iblocklist2ipset.svg?branch=master
+.. |Build Status| image:: https://travis-ci.org/9seconds/iblocklist2ipset.svg?branch=master
     :target: https://travis-ci.org/9seconds/iblocklist2ipset
 
-.. |Coverage Status| .. image:: https://coveralls.io/repos/9seconds/iblocklist2ipset/badge.png?branch=master
+.. |Coverage Status| image:: https://coveralls.io/repos/9seconds/iblocklist2ipset/badge.png?branch=master
     :target: https://coveralls.io/r/9seconds/iblocklist2ipset?branch=master
 
-.. |Health Status| .. image:: https://landscape.io/github/9seconds/iblocklist2ipset/master/landscape.png
+.. |Health Status| image:: https://landscape.io/github/9seconds/iblocklist2ipset/master/landscape.png
    :target: https://landscape.io/github/9seconds/iblocklist2ipset/master
    :alt: Code Health
