@@ -18,6 +18,10 @@ REQUIREMENTS = (
 )
 
 
+with open("README.rst", "r") as resource:
+    LONG_DESCRIPTION = resource.read()
+
+
 ##############################################################################
 
 
@@ -47,7 +51,7 @@ class PyTest(test):
 setup(
     name="iblocklist2ipset",
     description="Converter between P2P lists from IBlocklist.com to IPSet",
-    long_description="TTT",
+    long_description=LONG_DESCRIPTION,
     version=".".join(str(part) for part in VERSION),
     author="Sergey Arkhipov",
     license="MIT",
