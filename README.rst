@@ -10,7 +10,7 @@ with `IPSets <http://ipset.netfilter.org/>`__.
 All it does, it converts lists from P2P format to the format compatible with
 ``ipset restore``. Basic usage is following:
 
-::
+.. code-block:: bash
 
     $ iblocklist2ipset generate \
         --ipset idiots
@@ -62,7 +62,7 @@ Examples
 
 Well, to give you a feel of a tool, let's just execute it as is:
 
-::
+.. code-block:: bash
 
     $ iblocklist2ipset -h
     Small utility to convert p2p format of IP Blocklists to IPSet format.
@@ -85,7 +85,7 @@ So as you can see, usage is pretty straightforward. You can give it multiple blo
 URLs and it will generate you correct file you can restore with ``ipset restore``. Let's do
 it with *hijacked* list:
 
-::
+.. code-block:: bash
 
     $ iblocklist2ipset generate \
         "http://list.iblocklist.com/?list=usrcshglbiilevmyfhse&fileformat=p2p&archiveformat=gz" \
@@ -104,7 +104,7 @@ it with *hijacked* list:
 
 Quite nice, isn't it? It calculated proper sizes for our list also. Now you can just import it
 
-::
+.. code-block:: bash
 
     $ sudo ipset -f ipset_to_restore
 
@@ -122,7 +122,7 @@ I have my Raspberry Pi running some mission critical software (BTSync for exampl
 
 I have a Raspbian up to date and now I want to use this shiny tool. First, let's install it.
 
-::
+.. code-block:: bash
 
     $ sudo pip install iblocklist2ipset
     $ sudo apt-get install -y ipset
@@ -131,7 +131,7 @@ I have a Raspbian up to date and now I want to use this shiny tool. First, let's
 
 I want to store an ipset blocklist into ``/etc/ipset.rules``.
 
-::
+.. code-block:: bash
 
     $ iblocklist2ipset example_restore_ipset_job \
         -i hijacked blocklist \
@@ -143,7 +143,7 @@ Now we created shell scripts. On execution it will restore iptables and ipset co
 be noticed that ``iblocklist2ipset`` understands virtualenv usage and script is generated with this
 knowledge also.
 
-::
+.. code-block:: bash
 
     $ iblocklist2ipset example_update_ipset_job \
         -i hijacked \
@@ -153,7 +153,7 @@ knowledge also.
 
 Lovely. Now we have a script to update. Let's update crontab then
 
-::
+.. code-block:: bash
 
     @reboot   /home/user/scripts/ipset_restore.sh
     @midnight /home/user/scripts/ipset_update.sh
