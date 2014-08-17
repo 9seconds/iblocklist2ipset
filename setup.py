@@ -5,16 +5,13 @@
 from setuptools import setup, find_packages
 from setuptools.command.test import test
 
-from iblocklist2ipset.settings import VERSION
-
 
 ##############################################################################
 
 
 REQUIREMENTS = (
     "netaddr==0.7.12",
-    "requests==2.3.0",
-    "docopt==0.6.2"
+    "requests==2.3.0"
 )
 
 
@@ -52,7 +49,7 @@ setup(
     name="iblocklist2ipset",
     description="Converter between P2P lists from IBlocklist.com to IPSet",
     long_description=LONG_DESCRIPTION,
-    version=".".join(str(part) for part in VERSION),
+    version="0.0.1",
     author="Sergey Arkhipov",
     license="MIT",
     author_email="serge@aerialsounds.org",
