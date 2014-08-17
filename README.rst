@@ -64,7 +64,7 @@ Well, to give you a feel of a tool, let's just execute it as is:
 
 ::
 
-    $ iblocklist2ipset -h                                                                                                                             git:master*
+    $ iblocklist2ipset -h
     Small utility to convert p2p format of IP Blocklists to IPSet format.
 
     Usage:
