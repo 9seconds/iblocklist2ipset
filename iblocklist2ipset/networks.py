@@ -27,17 +27,17 @@ def extract_networks(urls):
     networks = itertools.chain.from_iterable(
         fetch_networks(url) for url in urls
     )
-    return frozenset(networks)
+    return frozenset(str(network) for network in netaddr.cidr_merge(networks))
 
 
 def fetch_networks(url):
     http_response = requests.get(url, stream=True)
     for item in http_response.iter_lines(decode_unicode=False):
-        for network in convert_to_ipnetwork(item):
-            yield str(network)
+        for network in convert_to_ipnetworks(item):
+            yield network
 
 
-def convert_to_ipnetwork(blocklist_line):
+def convert_to_ipnetworks(blocklist_line):
     blocklist_line = blocklist_line.strip()
     # commentary or empty one
     if blocklist_line.startswith("#") or not blocklist_line:

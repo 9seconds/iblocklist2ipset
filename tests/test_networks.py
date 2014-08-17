@@ -19,7 +19,7 @@ import pytest
 from six import moves
 
 from iblocklist2ipset.networks import extract_networks, fetch_networks, \
-    convert_to_ipnetwork, ParseError
+    convert_to_ipnetworks, ParseError
 from tests import CommonTest
 
 
@@ -32,7 +32,7 @@ class TestConvertToIPNetwork(object):
         ":150.250.250.250-150.251.250.250"
     ))
     def test_ok(self, input_):
-        network = convert_to_ipnetwork(input_)
+        network = convert_to_ipnetworks(input_)
         assert network and len(network) > 0
 
     @pytest.mark.parametrize("input_", (
@@ -43,7 +43,7 @@ class TestConvertToIPNetwork(object):
     ))
     def test_nok(self, input_):
         with pytest.raises(ParseError):
-            convert_to_ipnetwork(input_)
+            convert_to_ipnetworks(input_)
 
     @pytest.mark.parametrize("input_", (
         "",
@@ -51,7 +51,7 @@ class TestConvertToIPNetwork(object):
         "#commented:127.0.0.1-127.0.0.12"
     ))
     def test_empty(self, input_):
-        assert convert_to_ipnetwork(input_) == []
+        assert convert_to_ipnetworks(input_) == []
 
 
 # noinspection PyUnresolvedReferences,PyMethodMayBeStatic
@@ -59,7 +59,7 @@ class TestFetchNetworks(CommonTest):
 
     def test_ok(self):
         with httmock.HTTMock(self.fake_response(self.FAKE_CONTENT)):
-            networks = list(fetch_networks("http://fake.url"))
+            networks = [str(ntw) for ntw in fetch_networks("http://fake.url")]
 
         assert set(networks) == set(self.FAKE_NETWORKS)
 
