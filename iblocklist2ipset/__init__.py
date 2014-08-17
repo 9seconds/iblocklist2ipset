@@ -81,7 +81,7 @@ def generate(args):
         return 1
 
     for line in generate_ipset(args["--ipset"], netwrks):
-        print(line)
+        print_(line)
 
 
 def main():
@@ -94,3 +94,5 @@ def main():
         return example_restore_ipset_job(arguments)
     elif arguments["example_update_ipset_job"]:
         return example_update_ipset_job(arguments)
+
+    return 2

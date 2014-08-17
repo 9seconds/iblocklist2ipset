@@ -3,6 +3,8 @@
 
 import os.path
 
+import httmock
+
 from six import moves
 
 
@@ -13,6 +15,32 @@ class CommonTest(object):
         "example_restore_ipset_job",
         "example_update_ipset_job"
     )
+
+    FAKE_NETWORKS = (
+        '223.4.233.164/31',
+        '223.4.241.230/31',
+        '223.4.241.242/32'
+    )
+
+    FAKE_CONTENT = """
+    # Test stuff. If you see your ips and truly sure it is clean, please contact me
+    # It was actually copypasted from BlueTack level1 blocklist, so there.
+
+    SMSHoax FakeAV Fraud Trojan:223.4.233.164-223.4.233.165
+    SMSHoax FakeAV Fraud Trojan:223.4.241.230-223.4.241.231
+    SMSHoax FakeAV Fraud Trojan:223.4.241.242-223.4.241.242
+    """.strip()
+
+    @staticmethod
+    def fake_response(content):
+        # noinspection PyUnusedLocal
+        @httmock.all_requests
+        def make_response(url, request):
+            headers = {
+                "Content-Type": "text/plain"
+            }
+            return httmock.response(200, content, headers, elapsed=100, request=request)
+        return make_response
 
     @staticmethod
     def patch_io(patcher):
@@ -33,7 +61,7 @@ class CommonTest(object):
             "--ipset": "blocklist_ipset",
         }
         for command in cls.SUBCOMMANDS:
-            args[command] = subcommand in cls.SUBCOMMANDS
+            args[command] = command == subcommand
 
         return args
 

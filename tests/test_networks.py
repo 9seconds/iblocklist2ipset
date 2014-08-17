@@ -20,32 +20,7 @@ from six import moves
 
 from iblocklist2ipset.networks import extract_networks, fetch_networks, \
     convert_to_ipnetwork, ParseError
-
-
-FAKE_NETWORKS = (
-    '223.4.233.164/31',
-    '223.4.241.230/31',
-    '223.4.241.242/32'
-)
-FAKE_CONTENT = """
-# Test stuff. If you see your ips and truly sure it is clean, please contact me
-# It was actually copypasted from BlueTack level1 blocklist, so there.
-
-SMSHoax FakeAV Fraud Trojan:223.4.233.164-223.4.233.165
-SMSHoax FakeAV Fraud Trojan:223.4.241.230-223.4.241.231
-SMSHoax FakeAV Fraud Trojan:223.4.241.242-223.4.241.242
-""".strip()
-
-
-def fake_response(content):
-    # noinspection PyUnusedLocal
-    @httmock.all_requests
-    def make_response(url, request):
-        headers = {
-            "Content-Type": "text/plain"
-        }
-        return httmock.response(200, content, headers, elapsed=100, request=request)
-    return make_response
+from tests import CommonTest
 
 
 # noinspection PyUnresolvedReferences
@@ -80,13 +55,13 @@ class TestConvertToIPNetwork(object):
 
 
 # noinspection PyUnresolvedReferences,PyMethodMayBeStatic
-class TestFetchNetworks(object):
+class TestFetchNetworks(CommonTest):
 
     def test_ok(self):
-        with httmock.HTTMock(fake_response(FAKE_CONTENT)):
+        with httmock.HTTMock(self.fake_response(self.FAKE_CONTENT)):
             networks = list(fetch_networks("http://fake.url"))
 
-        assert set(networks) == set(FAKE_NETWORKS)
+        assert set(networks) == set(self.FAKE_NETWORKS)
 
     @pytest.mark.parametrize("input_", (
         " ",
@@ -97,16 +72,16 @@ class TestFetchNetworks(object):
         """
     ))
     def test_empty(self, input_):
-        with httmock.HTTMock(fake_response(input_)):
+        with httmock.HTTMock(self.fake_response(input_)):
             assert list(fetch_networks("http://fake.url")) == []
 
 
 # noinspection PyMethodMayBeStatic
-class TestExtractNetworks(object):
+class TestExtractNetworks(CommonTest):
 
     def test_no_repeats(self):
         urls = ["http://fake{0}.url".format(idx) for idx in moves.range(3)]
-        with httmock.HTTMock(fake_response(FAKE_CONTENT)):
+        with httmock.HTTMock(self.fake_response(self.FAKE_CONTENT)):
             networks = extract_networks(urls)
 
-        assert set(networks) == set(FAKE_NETWORKS)
+        assert set(networks) == set(self.FAKE_NETWORKS)
