@@ -20,7 +20,7 @@ def try_if_empty(count):
     def outer_decorator(func):
         @functools.wraps(func)
         def inner_decorator(*args, **kwargs):
-            for attempt in moves.range(count - 1):
+            for attempt in moves.range(count - 1):  # pylint: disable=E1101
                 try:
                     result = func(*args, **kwargs)
                 except Exception as exc:  # pylint: disable=W0703
