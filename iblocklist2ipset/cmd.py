@@ -15,7 +15,7 @@ from .utils import script_example_header, printable_path
 
 @script_example_header
 def example_restore_ipset_job(args):
-    print_(RESTORE_IPSET_JOB_SCRIPT.format(
+    print_(u(RESTORE_IPSET_JOB_SCRIPT).format(
         ipset_filename=printable_path(args["IPSET_PATH"]),
         iptables_name=args["IPTABLES_NAME"],
         ipset_name=args["--ipset"]
@@ -24,7 +24,7 @@ def example_restore_ipset_job(args):
 
 @script_example_header
 def example_update_ipset_job(args):
-    print_(UPDATE_IPSET_JOB_SCRIPT.format(
+    print_(u(UPDATE_IPSET_JOB_SCRIPT).format(
         progpath=printable_path(sys.argv[0]),
         progname=PROGRAM_NAME,
         ipset_name=args["--ipset"],

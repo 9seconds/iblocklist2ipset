@@ -18,9 +18,6 @@ To get IP blocklists please visit https://www.iblocklist.com/
 """
 
 
-from six import u
-
-
 PROGRAM_NAME = "iblocklist2ipset"
 VERSION = 0, 0, 1
 
@@ -41,13 +38,11 @@ iptables -A {iptables_name} \
     -m set --match-set {ipset_name} dst \
     -j REJECT --reject-with icmp-host-unreachable
 """.strip()
-RESTORE_IPSET_JOB_SCRIPT = u(RESTORE_IPSET_JOB_SCRIPT)
 
 UPDATE_IPSET_JOB_SCRIPT = r"""
 {progpath} generate --ipset {ipset_name} {urls} > /tmp/{progname}.ipset
 mv /tmp/{progname}.ipset {ipset_path}
 """.strip()
-UPDATE_IPSET_JOB_SCRIPT = u(UPDATE_IPSET_JOB_SCRIPT)
 
 
 def get_version():
