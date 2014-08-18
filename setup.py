@@ -5,6 +5,8 @@
 from setuptools import setup, find_packages
 from setuptools.command.test import test
 
+from iblocklist2ipset import get_version
+
 
 ##############################################################################
 
@@ -51,7 +53,7 @@ setup(
     name="iblocklist2ipset",
     description="Converter between P2P lists from IBlocklist.com to IPSet",
     long_description=LONG_DESCRIPTION,
-    version="0.0.1",
+    version=get_version(),
     author="Sergey Arkhipov",
     license="MIT",
     author_email="serge@aerialsounds.org",
@@ -62,7 +64,7 @@ setup(
     tests_require=["pytest==2.6.1", "httmock==1.2.2"],
     packages=find_packages(exclude=["tests"]),
     entry_points={"console_scripts": [
-        "iblocklist2ipset = iblocklist2ipset:main"
+        "iblocklist2ipset = iblocklist2ipset.cmd:main"
     ]},
     cmdclass={'test': PyTest},
     classifiers=[
