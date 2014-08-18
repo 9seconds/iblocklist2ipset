@@ -11,7 +11,7 @@ import re
 
 from six import u, moves, print_
 
-from .settings import TIME_TO_SLEEP
+from . import TIME_TO_SLEEP
 
 
 def try_if_empty(count):

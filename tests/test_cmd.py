@@ -18,9 +18,9 @@ import os.path
 import httmock
 import pytest
 
-import iblocklist2ipset
-from iblocklist2ipset import main, generate, example_update_ipset_job, \
-    example_restore_ipset_job
+import iblocklist2ipset.cmd
+from iblocklist2ipset.cmd import generate, main,\
+    example_restore_ipset_job, example_update_ipset_job
 from tests import CommonTest
 
 
@@ -83,7 +83,7 @@ class TestMain(CommonTest):
     @classmethod
     def patch_func(cls, func_name, patcher):
         sentinel = object()
-        patcher.setattr(iblocklist2ipset, func_name,
+        patcher.setattr(iblocklist2ipset.cmd, func_name,
                         lambda args: sentinel)
         return sentinel
 

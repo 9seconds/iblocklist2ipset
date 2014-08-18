@@ -8,7 +8,7 @@ import requests
 
 from six import u
 
-from .settings import ATTEMPT_COUNT
+from . import ATTEMPT_COUNT
 from .utils import try_if_empty
 
 
