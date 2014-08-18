@@ -1,7 +1,7 @@
 iblocklist2ipset
 =========
 
-|Build Status| |Coverage Status| |Health Status|
+|Build Status| |Coverage Status| |Health Status| |PyPI Package|
 
 iblocklist2ipset is a small utility (really small, check out sources)
 to manage your favourite `iblocklists <https://www.iblocklist.com/>`__
@@ -175,3 +175,6 @@ Cheers.
 .. |Health Status| image:: https://landscape.io/github/9seconds/iblocklist2ipset/master/landscape.png
    :target: https://landscape.io/github/9seconds/iblocklist2ipset/master
    :alt: Code Health
+
+.. |PyPI Package| image:: https://badge.fury.io/py/iblocklist2ipset.svg
+    :target: http://badge.fury.io/py/iblocklist2ipset
